@@ -429,15 +429,18 @@ sub is_DOS {
    }
 
    if(defined @conf{DOS_USER_BANNED}) {            # user previously banned
-      if(time() - @conf{DOS_USER_BANNED} < @conf{dos_ban_time}) {
-         return 1;                                           # still banned
-      } else {
-         delete @conf{DOS_USER_BANNED};                           # expired
+      if(defined @{@conf{DOS_USER_BANNED}}->{@sock{$s}->{ip}}) {
+         if(time() - @{@conf{DOS_USER_BANNED}}->{@sock{$s}->{ip}} < 
+            @conf{dos_ban_time}) {
+            return 1;                                        # still banned
+         } else {
+            delete @{@conf{DOS_USER_BANNED}}->{@sock{$s}->{ip}}; # expired
+         }
       }
    }
 
    # record the current connection
-   @dos{@sock{$s}} = {} if not defined @dos{@sock{$s}};
+   @dos{@sock{$s}->{ip}} = {} if not defined @dos{@sock{$s}->{ip}};
    my $hash = @dos{@sock{$s}};
    @$hash{time()} = 1;
 
@@ -448,7 +451,7 @@ sub is_DOS {
          if(time() - $$hash{$host}->{time} > @conf{DOS_TIME}) { # old, delete
             delete @$hash{$host};
          } else {                                       # new, keep, monitor
-            $user_hits++ if($host eq @sock{$s}->{host});
+            $user_hits++ if($host eq @sock{$s}->{ip});
             $all_hits++;
          }
       }
@@ -459,7 +462,8 @@ sub is_DOS {
       return 1;
    }
    if($user_hits > @conf{DOS_USER_MAX}) {                  # single user ban
-      @conf{DOS_USER_BANNED} = time();
+      @conf{DOS_USER_BANNED} = {} if !defined @conf{DOS_USER_BANNED};
+      @conf{DOS_USER_BANNED}->{@sock{$s}->{ip}} = time();
       return 1;
    }
 
