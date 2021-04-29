@@ -1001,9 +1001,9 @@ printf("# Listening: HTTP%s(%d), %sWEBSOCK(%d)\n",
       );
 
 while(1) {
-#   eval {
+   eval {
       server_io();
-#   };
+   };
 }
 
 __DATA__
@@ -2205,7 +2205,8 @@ START: muddler_style.css
    }
    
    #output {
-     overflow: hidden;
+     overflow-y: auto;
+     overflow-x: hidden;
      white-space: pre-wrap;
      word-wrap: break-word;
      position: absolute;
@@ -3545,10 +3546,6 @@ START: muddler_client.html
          <button style="display:inline-block;width:25%;height:35px;border: 1px solid black;border-width:1px 0px 1px 1px;padding:0;float:left" onclick="input.onEnter('/key_pgdn 5')">PgDN</button>
          <button style="display: inline-block;width:25%;height:35px;border: 1px solid black;border-width:1px 0px 1px 1px;padding 0;float:left" onclick="input.onEnter('/key_up')">NextWld</button>
          <button style="display: inline-block;width:25%;height:35px;border: 1px solid black;border-width:1px 1px 1px 1px;padding 0;float:left" onclick="input.onEnter('/key_down')">PrevWld</button>
-     </div>
-     </div class=triangle>
-        <div class="inner-triangle" onclick="input.onEnter('/mobile')"><span>muddler</span></div>
-        <div class="outer-triangle"></div>
      </div>
    
    <script type="text/javascript" src="muddler_client.js"></script>
