@@ -21,7 +21,7 @@ use IO::Socket;
 use IO::Socket::SSL;
 use Net::WebSocket::Server;
 use Errno qw(EINTR EIO :POSIX);
-my ($listener,$websock,$http,%http_data,%sock,%conf,%mapping,%dos,$tmp,%telnet_ch, %state);
+my ($listener,$websock,$http,%http_data,%sock,%conf,%dos,$tmp,%telnet_ch, %state);
 
 my @options = qw(
     BINARY ECHO RCP SGA NAMS STATUS TM RCTE NAOL NAOP NAOCRD NAOHTS NAOHTD
